@@ -15,21 +15,18 @@ Die App ersetzt die fehleranfällige, analoge Zettelwirtschaft durch eine modern
 ---
 
 ## Screenshots & Benutzeroberfläche
-<table>
-  <tr>
-    <td><img src="<img width="2874" height="1579" alt="image" src="<img width="2874" height="1579" alt="Screenshot 2026-05-22 100013" src="https://github.com/user-attachments/assets/e3bcecfd-8ca8-4183-86a3-a82c87a307bb" />
-" />
-" alt="Sicheres Login-Overlay" width="400"/></td>
-    <td><img src="<img width="2880" height="1611" alt="Screenshot (337)" src="<img width="2880" height="1611" alt="Screenshot (337)" src="https://github.com/user-attachments/assets/537b0f1d-f52e-4d9b-94dc-e4ffd684508b" />
-" />
-" alt="Echtzeit-Dashboard" width="400"/></td>
-  </tr>
-  <tr>
-    <center><em>Links: Sicheres Login-Overlay | Rechts: Live-Verwaltung & Tagesauswertung</em></center>
-  </tr>
-</table>
+Login
+<img width="2874" height="1579" alt="Screenshot 2026-05-22 100013" src="https://github.com/user-attachments/assets/09b3f959-ac22-431e-a05f-40435e13fb21" />
 
----
+Echtzeit Dashboard
+<img width="2880" height="1611" alt="Screenshot (337)" src="https://github.com/user-attachments/assets/57a8f007-f641-49bb-ad8d-96f3e05d9c6e" />
+
+<img width="2880" height="1800" alt="Screenshot (338)" src="https://github.com/user-attachments/assets/83482cce-5011-43a2-914e-29ff28de00a1" />
+
+
+Abrechnung
+---<img width="2880" height="1800" alt="Screenshot (340)" src="https://github.com/user-attachments/assets/c914699e-6ec4-4bb0-8a01-0cae9241e44c" />
+
 
 ## Kernfunktionen
 * **Vollständige Digitalisierung:** Keine Papierformulare mehr, alle Kundendaten und Boards werden digital erfasst.
