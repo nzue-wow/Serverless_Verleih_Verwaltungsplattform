@@ -24,8 +24,10 @@ Die App ersetzt die fehleranfällige, analoge Zettelwirtschaft durch eine modern
 <img width="2880" height="1800" alt="Screenshot (338)" src="https://github.com/user-attachments/assets/83482cce-5011-43a2-914e-29ff28de00a1" />
 
 
+
 **Abrechnung**
-<img width="2880" height="1800" alt="Screenshot (340)" src="https://github.com/user-attachments/assets/c914699e-6ec4-4bb0-8a01-0cae9241e44c" />
+<img width="2880" height="1800" alt="Screenshot (340)" src="<img width="2855" height="1412" alt="image" src="https://github.com/user-attachments/assets/311a97d5-1921-47f3-967d-a07c60838030" />
+" />
 
 ---
 
