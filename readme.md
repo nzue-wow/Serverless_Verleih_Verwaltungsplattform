@@ -15,13 +15,13 @@ Die App ersetzt die fehleranfällige, analoge Zettelwirtschaft durch eine modern
 ---
 
 ## Screenshots & Benutzeroberfläche
-*(Platzhalter: Hier kannst du später deine Screenshots einfügen, wenn du sie im GitHub-Repository hochgeladen hast)*
-
 <table>
   <tr>
-    <td><img src="<img width="2874" height="1579" alt="image" src="https://github.com/user-attachments/assets/274cb0e4-b3e7-44cd-a47e-f5bb5bf0e5c8" />
+    <td><img src="<img width="2874" height="1579" alt="image" src="<img width="2874" height="1579" alt="Screenshot 2026-05-22 100013" src="https://github.com/user-attachments/assets/e3bcecfd-8ca8-4183-86a3-a82c87a307bb" />
+" />
 " alt="Sicheres Login-Overlay" width="400"/></td>
-    <td><img src="<img width="2880" height="1611" alt="Screenshot (337)" src="https://github.com/user-attachments/assets/0d304ed7-2cd7-49df-8267-d86c6254a5c6" />
+    <td><img src="<img width="2880" height="1611" alt="Screenshot (337)" src="<img width="2880" height="1611" alt="Screenshot (337)" src="https://github.com/user-attachments/assets/537b0f1d-f52e-4d9b-94dc-e4ffd684508b" />
+" />
 " alt="Echtzeit-Dashboard" width="400"/></td>
   </tr>
   <tr>
