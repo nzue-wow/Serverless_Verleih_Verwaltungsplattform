@@ -1,7 +1,3 @@
-## Serverless Verleih Verwaltungsplattform
-
-Diese Plattform wurde erstellt um mir beim Sommerjob SUB vermieten zu assistieren. Sie ersetzt die Zettelwirtschaft und hilft bei der berechnung der Tagesasuwertung und der verwaltung der vermieteten Subs. DIe Plattform ist gesichert durch ein Login. Die Plattform wird live ugedatet dafür brauche ich eine CLoud (firebase von google) NoSQL? 
-
 # Digital Rental & Cloud Sync System
 > **Sichere Serverless Web-App zur Echtzeit-Verwaltung von SUP-Vermietungen, die manuelle Abläufe digitalisiert und Daten mit lokaler Datenresidenz in der Google Cloud-Region Schweiz (Zürich) synchronisiert.**
 
