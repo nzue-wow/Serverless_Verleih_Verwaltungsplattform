@@ -15,18 +15,19 @@ Die App ersetzt die fehleranfällige, analoge Zettelwirtschaft durch eine modern
 ---
 
 ## Screenshots & Benutzeroberfläche
-Login
+**Login**
 <img width="2874" height="1579" alt="Screenshot 2026-05-22 100013" src="https://github.com/user-attachments/assets/09b3f959-ac22-431e-a05f-40435e13fb21" />
 
-Echtzeit Dashboard
+**Echtzeit Dashboard**
 <img width="2880" height="1611" alt="Screenshot (337)" src="https://github.com/user-attachments/assets/57a8f007-f641-49bb-ad8d-96f3e05d9c6e" />
 
 <img width="2880" height="1800" alt="Screenshot (338)" src="https://github.com/user-attachments/assets/83482cce-5011-43a2-914e-29ff28de00a1" />
 
 
-Abrechnung
----<img width="2880" height="1800" alt="Screenshot (340)" src="https://github.com/user-attachments/assets/c914699e-6ec4-4bb0-8a01-0cae9241e44c" />
+**Abrechnung**
+<img width="2880" height="1800" alt="Screenshot (340)" src="https://github.com/user-attachments/assets/c914699e-6ec4-4bb0-8a01-0cae9241e44c" />
 
+---
 
 ## Kernfunktionen
 * **Vollständige Digitalisierung:** Keine Papierformulare mehr, alle Kundendaten und Boards werden digital erfasst.
