@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUP Station Cloud Management</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f4f6f9; z-index: 9999; display: flex; align-items: center; justify-content: center;">
+    <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center;">
+        <h2 style="margin-bottom: 20px; color: #333;">SUP Station Login</h2>
+        <div style="margin-bottom: 15px; text-align: left;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">E-Mail:</label>
+            <input type="email" id="login-email" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" placeholder="team@sup-station.ch">
+        </div>
+        <div style="margin-bottom: 20px; text-align: left;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Passwort:</label>
+            <input type="password" id="login-passwort" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" placeholder="••••••••">
+        </div>
+        <button id="btn-login" style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: bold;">Einloggen</button>
+        <p id="login-fehler" style="color: red; margin-top: 15px; display: none;"></p>
+    </div>
+</div>
+
+    <div class="nav-tabs">
+        <button id="tabLiveBtn" class="tab-btn active" onclick="switchTab('live')">🏄 Live Vermietung</button>
+        <button id="tabHistoryBtn" class="tab-btn" onclick="switchTab('history')">📊 Tagesauswertung & Historie</button>
+        <button id="btn-logout" style="padding: 8px 15px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; float: right; margin: 10px;">
+    Abmelden
+</button>
+    </div>
+
+    <div id="tabLive" class="tab-content active-content">
+        <div class="app-container">
+            <div class="panel form-panel">
+                <h2>Neue Vermietung</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Vorname</label>
+                        <input type="text" id="vorname" placeholder="Mimi">
+                    </div>
+                    <div class="form-group">
+                        <label>Nachname</label>
+                        <input type="text" id="nachname" placeholder="Muster">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" id="telefon" placeholder="079 000 00 00">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="email" placeholder="mimi@beispiel.ch">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Was gemietet?</label>
+                        <select id="artikel">
+                            <option value="SUP">SUP (1. Std CHF 20 / weitere CHF 15) - Pro Pers.</option>
+                            <option value="SUP_XXL">SUP XXL (CHF 95/h) - Pauschal</option>
+                            <option value="ABO">Abonnement SUP (10 x 1h - CHF 170) - Pro Pers.</option>
+                            <option value="KAJAK_1">Kajak 1-Plätzer (1. Std CHF 25 / weitere CHF 20) - Pro Pers.</option>
+                            <option value="KAJAK_2">Kajak 2-Plätzer (1. Std CHF 30 / weitere CHF 25) - Pro Pers.</option>
+                        </select>
+                    </div>
+                    <div class="form-group max-w-small">
+                        <label>Personen (= SUPs)</label>
+                        <select id="personen">
+                            <option value="1">1</option><option value="2">2</option>
+                            <option value="3">3</option><option value="4">4</option>
+                            <option value="5">5</option><option value="6">6</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Extra Sachen</label>
+                        <input type="text" id="extraSachen" placeholder="z.B. 2x Drybag">
+                    </div>
+                    <div class="form-group max-w-small">
+                        <label>Extra Preis total (CHF)</label>
+                        <input type="number" id="extraPreis" value="0" min="0" step="1">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Startzeit (Uhrzeit)</label>
+                        <input type="time" id="startzeit">
+                    </div>
+                    <div class="form-group">
+                        <label>Dauer</label>
+                        <select id="dauer">
+                            <option value="1">1 Stunde</option>
+                            <option value="2">2 Stunden</option>
+                            <option value="3">3 Stunden</option>
+                            <option value="4">4 Stunden</option>
+                            <option value="5">5 Stunden</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Zahlungsart</label>
+                        <select id="zahlungsart">
+                            <option value="Bar">Bar</option>
+                            <option value="Karte">Karte</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Depot</label>
+                        <input type="text" id="depot" placeholder="z.B. ID, Autoschlüssel">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Bemerkungen</label>
+                    <textarea id="bemerkungen" rows="2" placeholder="Spezielle Hinweise..."></textarea>
+                </div>
+
+                <div class="live-calc-box">
+                    <div><strong>Preis total:</strong> <span id="previewPreis">CHF 20.00</span></div>
+                    <div><strong>Soll-Rückgabe:</strong> <span id="previewRueckgabe">--:--</span></div>
+                </div>
+
+                <button id="btnSpeichern" class="btn btn-primary">Speichern</button>
+            </div>
+
+            <div class="panel list-panel">
+                <h2>Aktuell vermietete Sachen (Aktiv)</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nachname, Vorname</th>
+                                <th>Was gemietet</th>
+                                <th>Soll-Rückgabe</th>
+                                <th>Depot</th>
+                                <th>Meldung</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rentalsTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tabHistory" class="tab-content">
+        <div class="app-container">
+            <div class="panel form-panel">
+                <h2>Tages-Finanzbericht</h2>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Datum auswählen für Rückblick:</label>
+                    <input type="date" id="historyDatumAuswahl">
+                </div>
+
+                <div class="kpi-grid">
+                    <div class="kpi-box card-bar">
+                        <div class="kpi-title">Bar Einnahmen</div>
+                        <div class="kpi-value" id="kpiBar">CHF 0.00</div>
+                    </div>
+                    <div class="kpi-box card-karte">
+                        <div class="kpi-title">Karte Einnahmen</div>
+                        <div class="kpi-value" id="kpiKarte">CHF 0.00</div>
+                    </div>
+                    <div class="kpi-box card-total">
+                        <div class="kpi-title">Gesamteinnahmen (Umsatz)</div>
+                        <div class="kpi-value" id="kpiTotal">CHF 0.00</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 25px;">Umsatz-Auswertung nach Artikel</h3>
+                <ul class="stats-list" id="statsMengenListe">
+                    </ul>
+            </div>
+
+            <div class="panel list-panel">
+                <h2>Geschlossene Vermietungen am gewählten Tag</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kunde</th>
+                                <th>Artikel (Pers.)</th>
+                                <th>Zeit (Dauer)</th>
+                                <th>Zahlart</th>
+                                <th>Eingenommen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="detailsModal" class="modal">
+        <div class="modal-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <h3>Vermietung bearbeiten / beenden</h3>
+            <input type="hidden" id="editId">
+            
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Vorname</label>
+                        <input type="text" id="editVorname">
+                    </div>
+                    <div class="form-group">
+                        <label>Nachname</label>
+                        <input type="text" id="editNachname">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="text" id="editTelefon">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="editEmail">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Was gemietet?</label>
+                        <select id="editArtikel">
+                            <option value="SUP">SUP</option>
+                            <option value="SUP_XXL">SUP XXL</option>
+                            <option value="ABO">Abonnement SUP</option>
+                            <option value="KAJAK_1">Kajak 1-Plätzer</option>
+                            <option value="KAJAK_2">Kajak 2-Plätzer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Personen</label>
+                        <select id="editPersonen">
+                            <option value="1">1</option><option value="2">2</option>
+                            <option value="3">3</option><option value="4">4</option>
+                            <option value="5">5</option><option value="6">6</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Startzeit</label>
+                        <input type="time" id="editStartzeit">
+                    </div>
+                    <div class="form-group">
+                        <label>Dauer (Stunden)</label>
+                        <select id="editDauer">
+                            <option value="1">1 Stunde</option>
+                            <option value="2">2 Stunden</option>
+                            <option value="3">3 Stunden</option>
+                            <option value="4">4 Stunden</option>
+                            <option value="5">5 Stunden</option>
+                            <option value="6">6 Stunden</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Extra Sachen</label>
+                        <input type="text" id="editExtraSachen">
+                    </div>
+                    <div class="form-group">
+                        <label>Extra Preis total (CHF)</label>
+                        <input type="number" id="editExtraPreis" min="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Zahlungsart</label>
+                        <select id="editZahlungsart">
+                            <option value="Bar">Bar</option>
+                            <option value="Karte">Karte</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Depot</label>
+                        <input type="text" id="editDepot">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Bemerkungen</label>
+                    <textarea id="editBemerkungen" rows="2"></textarea>
+                </div>
+                
+                <div style="margin-top: 15px; padding: 12px; background: #ebf3fc; border-left: 4px solid #007BFF; border-radius: 4px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                        <span><strong>Soll-Rückgabe:</strong> <span id="detailRueckgabe">--:--</span></span>
+                        <span><strong>Preis berechnet:</strong> <span id="detailPreis" class="highlight-price">CHF 0.00</span></span>
+                    </div>
+                    <div><strong>Status-Meldung:</strong> <span id="detailMeldung"></span></div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="btnDelete" class="btn btn-danger">Löschen</button>
+                <button id="btnAnpassen" class="btn btn-warning">Änderungen speichern</button>
+                <button id="btnBeenden" class="btn btn-success">✓ Beenden & Archivieren</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script src="script.js"></script>
+</body>
+</html>
